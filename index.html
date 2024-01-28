@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="image/favicon.png" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.6.0/dist/full.min.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -13,6 +14,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
+    <title>BMI Calculator</title>
     <style>
         .lato {
             font-family: 'Lato', sans-serif;
@@ -135,7 +137,7 @@
                 <div class="lg:w-[100%] w-full  lg:p-10">
                     <form class=" w-full">
                         <ul class="lg:grid w-full gap-6 md:grid-cols-2 mb-5 flex">
-                            <li  class="w-[50%] lg:w-full">
+                            <li class="w-[50%] lg:w-full">
                                 <input type="radio" id="hosting-small" name="hosting" value="hosting-small"
                                     class="hidden peer" required>
                                 <label for="hosting-small"
@@ -166,39 +168,72 @@
                                 placeholder="Enter Your Age" required>
                         </div>
                         <div class="mb-5 flex gap-3 justify-between">
-                            <label for="weight" class="block mb-2 text-xl font-bold text-[#6468a4] ">Weight(Kg)
+                            <label for="weight" class="block mb-2 text-xl font-bold text-[#6468a4] ">Weight (Kg)
                                 :</label>
                             <input type="number" id="weight"
                                 class="bg-gray-50 border-2 border-[#6468a4] text-gray-900 text-sm rounded-lg  block  p-2.5 w-[70%]"
                                 placeholder="Enter Your weight" required>
                         </div>
                         <div class="mb-5 flex gap-3 items-center justify-between">
-                            <label for="height" class="block mb-2 text-xl  font-bold text-[#6468a4] ">Height(M)
+                            <label for="height" class="block mb-2 text-xl  font-bold text-[#6468a4] ">Height (M)
                                 :</label>
                             <div class="w-[70%] flex gap-3">
-                                <input type="number" step="0.1" id="height"
+                                <input type="number" step="0.1" id="feet"
                                     class="bg-gray-50 border-2 border-[#6468a4] text-gray-900 text-sm rounded-lg  block w-full p-2.5  "
                                     required placeholder="feet">
-                                <input type="number" step="0.1" id="height"
+                                <input type="number" step="0.1" id="inches"
                                     class="bg-gray-50 border-2 border-[#6468a4] text-gray-900 text-sm rounded-lg  block w-full p-2.5  "
                                     placeholder="Inchi">
                             </div>
                         </div>
                         <div class="w-full flex justify-center gap-3">
-                            <button type="submit"
-                            class="text-white bg-[#6468a4]  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center ">Submit
-                        </button>
-                        <button type="reset"
-                            class="text-white bg-[#6468a4]  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center ">Reset
-                        </button>
+                            <!-- <button type="submit"
+                                class="text-white bg-[#6468a4]  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center "
+                                >
+                            </button> -->
+                            <button class="text-white bg-[#6468a4]  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center " onclick="calculateBMI()"> Calculate BMI</button>
+                            <dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
+                                <div class="modal-box">
+                                    <div class="max-w-screen-xl text-left mx-auto p-4">
+                                        <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
+                                            <img src="image/log.svg" class="h-7" />
+                                            <span
+                                                class="self-center lg:text-3xl text-2xl  font-extrabold whitespace-nowrap flex text-[#6468a4] ">BMI
+                                                <p class=" font-normal text-[#6468a480]">calc</p>
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <div id="result" class="text-center text-xl font-bold "></div>
+                                    <div class="modal-action">
+                                        <form method="dialog">
+                                            <!-- if there is a button in form, it will close the modal -->
+                                            <button class="btn" onclick="my_modal_5.close()">Close</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </dialog>
+                            <button type="reset"
+                                class="text-white bg-[#6468a4]  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center ">Reset
+                            </button>
+
                         </div>
+                        <div id="result"></div>
                     </form>
                 </div>
             </div>
         </section>
-    </header>
 
+        <!-- Open the modal using ID.showModal() method -->
+       
+    </header>
+    <footer class="footer footer-center p-4 bg-base-300 text-base-content bg-[#6468a4] lg:mt-0 mt-5">
+        <aside>
+          <p class="lg:text-xl font-bold text-white">Copyright © 2024 - All right reserved by Habib Ulla</p>
+        </aside>
+      </footer>
+    <script src="script.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
+
 </body>
 
 </html>
